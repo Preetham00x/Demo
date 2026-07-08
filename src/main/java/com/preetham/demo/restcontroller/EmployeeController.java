@@ -3,6 +3,8 @@ package com.preetham.demo.restcontroller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,29 +31,35 @@ public class EmployeeController {
 	}
 	
 	@PostMapping
-	public Employee addEmployee(@RequestBody Employee emp) {
-		return service.addEmployee(emp);
+	public ResponseEntity<Employee> addEmployee(@RequestBody Employee emp) {
+		Employee saved=service.addEmployee(emp);
+		 return new ResponseEntity<>(saved,HttpStatus.CREATED);
+		 
 		
 	}
 	
 	@DeleteMapping("/{id}")
-	public void deleteEmployee( @PathVariable Integer id) {
+	public ResponseEntity<Void> deleteEmployee( @PathVariable Integer id) {
 		 service.deleteEmpById(id);
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 	
 	@GetMapping("/{id}")
-	public Employee getEmpDetails(@PathVariable Integer id) {
-		return service.getEmployeeById(id);
+	public ResponseEntity<Employee> getEmpDetails(@PathVariable Integer id) {
+		Employee e= service.getEmployeeById(id);
+		return new ResponseEntity<>(e,HttpStatus.OK);
 	}
 	
 	@GetMapping
-	public List<Employee> getAllEmpDetails(){
-		return service.getAllEmployees();
+	public ResponseEntity<List<Employee>> getAllEmpDetails(){
+		List<Employee> e=service.getAllEmployees();
+		return new ResponseEntity<>(e,HttpStatus.OK);
 	}
 	
 	@PutMapping("/{id}")
-	public Employee updateEmpDetails(@RequestBody Employee emp,@PathVariable Integer id) {
+	public ResponseEntity<Employee> updateEmpDetails(@RequestBody Employee emp,@PathVariable Integer id) {
 		emp.setId(id);
-		return service.updateEmployee(emp);
+		Employee e=service.updateEmployee(emp);
+		return new ResponseEntity<>(e,HttpStatus.OK);
 	}
 }
