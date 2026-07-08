@@ -32,16 +32,16 @@ public class Employee {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getdeptName() {
+	public String getDeptName() {
 		return deptName;
 	}
-	public void setDept_name(String deptName) {
+	public void setDeptName(String deptName) {
 		this.deptName = deptName;
 	}
-	public Integer getdeptId() {
+	public Integer getDeptId() {
 		return deptId;
 	}
-	public void setdeptId(Integer deptId) {
+	public void setDeptId(Integer deptId) {
 		this.deptId = deptId;
 	}
 	public Employee(Integer id, Double salary, String name, String deptName, Integer deptId) {
