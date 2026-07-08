@@ -1,5 +1,11 @@
 package com.preetham.demo.exception;
 
-public class EmployeeNotFoundException {
+public class EmployeeNotFoundException extends RuntimeException {
+	
+	
+	public EmployeeNotFoundException(String message){
+		super(message);
+		
+	}
 
 }

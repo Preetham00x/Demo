@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.preetham.demo.exception.EmployeeNotFoundException;
 import com.preetham.demo.model.Employee;
 import com.preetham.demo.repo.IEmployeeRepository;
 
@@ -35,7 +36,7 @@ public class EmployeeService implements IEmployeeService  {
 	public Employee getEmployeeById(Integer id) {
 		// TODO Auto-generated method stub
 		 
-		 return repo.findById(id).orElseThrow(()-> new RuntimeException("emp not found"));
+		 return repo.findById(id).orElseThrow(()-> new EmployeeNotFoundException("Employee not found"));
 	}
 
 	@Override
