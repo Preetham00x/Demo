@@ -6,6 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.preetham.demo.Mapper.EmployeeMapper;
+import com.preetham.demo.dto.EmployeeRequestDto;
+import com.preetham.demo.dto.EmployeeResponseDto;
 import com.preetham.demo.exception.EmployeeNotFoundException;
 import com.preetham.demo.model.Employee;
 import com.preetham.demo.repo.IEmployeeRepository;
@@ -15,42 +18,54 @@ public class EmployeeService implements IEmployeeService  {
 
 	
 	private IEmployeeRepository repo;
-	
 	@Autowired
-	public void setRepo(IEmployeeRepository repo) {
-		this.repo = repo;
+	private  EmployeeMapper mapper;
+
+	@Autowired
+	public EmployeeService(IEmployeeRepository repo) {
+	    this.repo = repo;
+	    
 	}
 
 	@Override
-	public Employee addEmployee(Employee emp) {
-		return repo.save(emp);
+	public EmployeeResponseDto addEmployee(EmployeeRequestDto emp) {
+		 Employee employee = mapper.toEntity(emp);
+
+		    Employee savedEmployee = repo.save(employee);
+		    return mapper.toDto(savedEmployee);
 	}
 
 	@Override
-	public List<Employee> getAllEmployees() {
+	public List<EmployeeResponseDto> getAllEmployees() {
+		List<Employee> employees=repo.findAll();
 		// TODO Auto-generated method stub
-		return repo.findAll();
+		return mapper.toDto(employees);
 	}
 
 	@Override
-	public Employee getEmployeeById(Integer id) {
+	public EmployeeResponseDto getEmployeeById(Integer id) {
 		// TODO Auto-generated method stub
 		 
-		 return repo.findById(id).orElseThrow(()-> new EmployeeNotFoundException("Employee not found"));
+		Employee employee = repo.findById(id)
+		        .orElseThrow(() ->
+		                new EmployeeNotFoundException("Employee not found"));
+
+		return mapper.toDto(employee);
 	}
 
 	@Override
-	public Employee updateEmployee(Employee emp) {
+	public EmployeeResponseDto updateEmployee(Integer id,
+	                                          EmployeeRequestDto dto) {
 
-		Optional<Employee> optional= repo.findById(emp.getId());
-		if(optional.isPresent()) {
-			return repo.save(emp);
-		}else {
-			throw new RuntimeException("emp record not found");
-		}
-		
-		
-		
+	    Employee employee = repo.findById(id)
+	            .orElseThrow(() ->
+	                    new EmployeeNotFoundException("Employee not found"));
+
+	    mapper.updateEmployeeFromDto(dto, employee);
+
+	    Employee updated = repo.save(employee);
+
+	    return mapper.toDto(updated);
 	}
 
 	@Override
