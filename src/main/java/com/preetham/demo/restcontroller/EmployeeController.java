@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.preetham.demo.model.Employee;
 import com.preetham.demo.service.IEmployeeService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
@@ -31,7 +33,7 @@ public class EmployeeController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Employee> addEmployee(@RequestBody Employee emp) {
+	public ResponseEntity<Employee> addEmployee(@Valid @RequestBody Employee emp) {
 		Employee saved=service.addEmployee(emp);
 		 return new ResponseEntity<>(saved,HttpStatus.CREATED);
 		 
@@ -57,7 +59,7 @@ public class EmployeeController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Employee> updateEmpDetails(@RequestBody Employee emp,@PathVariable Integer id) {
+	public ResponseEntity<Employee> updateEmpDetails(@Valid @RequestBody Employee emp,@PathVariable Integer id) {
 		emp.setId(id);
 		Employee e=service.updateEmployee(emp);
 		return new ResponseEntity<>(e,HttpStatus.OK);
