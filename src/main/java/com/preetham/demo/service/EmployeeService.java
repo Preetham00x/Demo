@@ -2,6 +2,8 @@ package com.preetham.demo.service;
 
 import java.util.List;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,12 +92,19 @@ public class EmployeeService implements IEmployeeService  {
 	}
 	@Override
 	public Page<EmployeeResponseDto> getEmployeesWithPagination(int size,int page){
-		Pageable pageable=PageRequest.of(page, size);
+		Pageable pageable=PageRequest.of(size, page);
 		Page<Employee> emps=repo.findAll(pageable);
 		return emps.map(mapper::toDto);
 		
 	}
-	
+	@Override
+	public List<EmployeeResponseDto> getEmployeesSorted(String field) {
+
+	    List<Employee> employees =
+	            repo.findAll(Sort.by(field));
+
+	    return mapper.toDto(employees);
+	}
 	@Override
 	public void deleteEmpById(Integer id) {
 		if(!repo.existsById(id)) {

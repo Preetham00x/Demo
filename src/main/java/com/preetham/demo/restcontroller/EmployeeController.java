@@ -3,7 +3,8 @@
 	import java.util.List;
 	
 	import org.springframework.beans.factory.annotation.Autowired;
-	import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 	import org.springframework.http.ResponseEntity;
 	import org.springframework.web.bind.annotation.DeleteMapping;
 	import org.springframework.web.bind.annotation.GetMapping;
@@ -72,6 +73,24 @@ import com.preetham.demo.dto.EmployeeResponseDto;
 			List<EmployeeResponseDto> emp=service.searchByDeptId(deptId);
 			return new ResponseEntity<>(emp,HttpStatus.OK);
 			
+		}
+		@GetMapping("/page")
+		public ResponseEntity<Page<EmployeeResponseDto>> getEmployeesPage(
+		        @RequestParam(defaultValue="0") int page,
+		        @RequestParam(defaultValue="5") int size){
+
+		    return ResponseEntity.ok(
+		        service.getEmployeesWithPagination(page,size)
+		    );
+		}
+		@GetMapping("/sort")
+		public ResponseEntity<List<EmployeeResponseDto>>
+		getSortedEmployees(
+		        @RequestParam String field){
+
+		    return ResponseEntity.ok(
+		            service.getEmployeesSorted(field)
+		    );
 		}
 		@GetMapping("/search/salary")
 		public ResponseEntity<List<EmployeeResponseDto>> searchBySalary(@RequestParam Double salary){
