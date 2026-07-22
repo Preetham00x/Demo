@@ -8,5 +8,6 @@ import com.preetham.demo.model.Employee;
 
 public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {
 	List<Employee> findByName(String name);
+	List<Employee> findByDeptId(Integer deptId);
 
 }

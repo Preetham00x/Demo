@@ -67,6 +67,12 @@ import com.preetham.demo.dto.EmployeeResponseDto;
 			return ResponseEntity.ok(emp);
 			
 		}
+		@GetMapping("/search/deptId")
+		public ResponseEntity<List<EmployeeResponseDto>> searchBydeptId(@RequestParam Integer deptId){
+			List<EmployeeResponseDto> emp=service.searchByDeptId(deptId);
+			return new ResponseEntity<>(emp,HttpStatus.OK);
+			
+		}
 		
 		@PutMapping("/{id}")
 		public ResponseEntity<EmployeeResponseDto> updateEmpDetails(

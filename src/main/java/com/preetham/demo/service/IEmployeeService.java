@@ -19,7 +19,7 @@ public interface IEmployeeService {
 
 	EmployeeResponseDto updateEmployee(Integer id,
 	                                   EmployeeRequestDto dto);
-
+	List<EmployeeResponseDto> searchByDeptId(Integer deptId);
 	void deleteEmpById(Integer id);
 	List<EmployeeResponseDto> searchByEmpName(String name);
 }
