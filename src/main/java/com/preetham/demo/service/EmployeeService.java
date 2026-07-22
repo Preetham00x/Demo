@@ -1,9 +1,12 @@
 package com.preetham.demo.service;
 
 import java.util.List;
+import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.preetham.demo.Mapper.EmployeeMapper;
@@ -85,6 +88,14 @@ public class EmployeeService implements IEmployeeService  {
 		List<Employee> emp=repo.findBySalaryGreaterThan(salary);
 		return mapper.toDto(emp);
 	}
+	@Override
+	public Page<EmployeeResponseDto> getEmployeesWithPagination(int size,int page){
+		Pageable pageable=PageRequest.of(page, size);
+		Page<Employee> emps=repo.findAll(pageable);
+		return emps.map(mapper::toDto);
+		
+	}
+	
 	@Override
 	public void deleteEmpById(Integer id) {
 		if(!repo.existsById(id)) {
