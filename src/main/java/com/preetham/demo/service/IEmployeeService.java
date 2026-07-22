@@ -26,6 +26,10 @@ public interface IEmployeeService {
 	
 	void deleteEmpById(Integer id);
 	
+	public List<EmployeeResponseDto> filterEmployees(
+	        String name,
+	        Integer deptId,
+	        Double salary);
 	
 	List<EmployeeResponseDto> searchByEmpName(String name);
 	

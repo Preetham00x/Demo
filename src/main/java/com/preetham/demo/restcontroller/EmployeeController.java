@@ -92,7 +92,19 @@ import com.preetham.demo.dto.EmployeeResponseDto;
 		            service.getEmployeesSorted(field, direction)
 		    );
 		}
-		
+		@GetMapping("/filter")
+		public ResponseEntity<List<EmployeeResponseDto>> filterEmployees(
+
+		        @RequestParam(required = false) String name,
+
+		        @RequestParam(required = false) Integer deptId,
+
+		        @RequestParam(required = false) Double salary) {
+
+		    return ResponseEntity.ok(
+		            service.filterEmployees(name, deptId, salary)
+		    );
+		}
 		@GetMapping("/search/salary")
 		public ResponseEntity<List<EmployeeResponseDto>> searchBySalary(@RequestParam Double salary){
 			List<EmployeeResponseDto> e=service.searchbySalaryGreaterthan(salary);

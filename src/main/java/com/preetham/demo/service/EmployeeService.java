@@ -3,6 +3,7 @@ package com.preetham.demo.service;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Optional;
 
@@ -12,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.preetham.demo.Mapper.EmployeeMapper;
+import com.preetham.demo.Specification.EmployeeSpecification;
 import com.preetham.demo.dto.EmployeeRequestDto;
 import com.preetham.demo.dto.EmployeeResponseDto;
 import com.preetham.demo.exception.EmployeeNotFoundException;
@@ -108,6 +110,28 @@ public class EmployeeService implements IEmployeeService  {
 		List<Employee> employees = repo.findAll(sort);
 
 		return mapper.toDto(employees);
+	}
+	@Override
+	public List<EmployeeResponseDto> filterEmployees(
+	        String name,
+	        Integer deptId,
+	        Double salary) {
+
+	    Specification<Employee> spec = Specification.where(null);
+
+	    if (name != null) {
+	        spec = spec.and(EmployeeSpecification.hasName(name));
+	    }
+
+	    if (deptId != null) {
+	        spec = spec.and(EmployeeSpecification.hasDeptId(deptId));
+	    }
+
+	    if (salary != null) {
+	        spec = spec.and(EmployeeSpecification.salaryGreaterThan(salary));
+	    }
+
+	    return mapper.toDto(repo.findAll(spec));
 	}
 	@Override
 	public void deleteEmpById(Integer id) {
