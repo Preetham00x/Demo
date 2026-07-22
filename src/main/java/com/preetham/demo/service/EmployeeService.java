@@ -101,13 +101,13 @@ public class EmployeeService implements IEmployeeService  {
 	@Override
 	public List<EmployeeResponseDto> getEmployeesSorted(String field, String direction) {
 
-	    Sort sort = direction.equalsIgnoreCase("desc")
-	            ? Sort.by(field).descending()
-	            : Sort.by(field).ascending();
+		Sort.Direction sortDirection = Sort.Direction.fromString(direction);
 
-	    List<Employee> employees = repo.findAll(sort);
+		Sort sort = Sort.by(sortDirection, field);
 
-	    return mapper.toDto(employees);
+		List<Employee> employees = repo.findAll(sort);
+
+		return mapper.toDto(employees);
 	}
 	@Override
 	public void deleteEmpById(Integer id) {
