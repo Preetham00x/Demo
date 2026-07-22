@@ -12,7 +12,8 @@
 	import org.springframework.web.bind.annotation.PutMapping;
 	import org.springframework.web.bind.annotation.RequestBody;
 	import org.springframework.web.bind.annotation.RequestMapping;
-	import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 	import org.springframework.web.bind.annotation.RestController;
 
 import com.preetham.demo.dto.EmployeeRequestDto;
@@ -58,6 +59,13 @@ import com.preetham.demo.dto.EmployeeResponseDto;
 		public ResponseEntity<List<EmployeeResponseDto>> getAllEmpDetails(){
 			List<EmployeeResponseDto> e=service.getAllEmployees();
 			return new ResponseEntity<>(e,HttpStatus.OK);
+		}
+		
+		@GetMapping("/search/name")
+		public ResponseEntity<List<EmployeeResponseDto>> searchByEmpName(@RequestParam String name){
+			List<EmployeeResponseDto> emp=service.searchByEmpName(name);
+			return ResponseEntity.ok(emp);
+			
 		}
 		
 		@PutMapping("/{id}")

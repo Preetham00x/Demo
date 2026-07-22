@@ -67,6 +67,12 @@ public class EmployeeService implements IEmployeeService  {
 
 	    return mapper.toDto(updated);
 	}
+	@Override
+	public List<EmployeeResponseDto> searchByEmpName(String name) {
+		List<Employee> emp=repo.findByName(name);
+		return  mapper.toDto(emp);
+		
+	}
 
 	@Override
 	public void deleteEmpById(Integer id) {

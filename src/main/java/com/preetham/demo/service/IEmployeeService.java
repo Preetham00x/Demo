@@ -21,4 +21,5 @@ public interface IEmployeeService {
 	                                   EmployeeRequestDto dto);
 
 	void deleteEmpById(Integer id);
+	List<EmployeeResponseDto> searchByEmpName(String name);
 }
