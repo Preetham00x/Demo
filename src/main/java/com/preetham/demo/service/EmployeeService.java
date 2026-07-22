@@ -97,11 +97,15 @@ public class EmployeeService implements IEmployeeService  {
 		return emps.map(mapper::toDto);
 		
 	}
+	
 	@Override
-	public List<EmployeeResponseDto> getEmployeesSorted(String field) {
+	public List<EmployeeResponseDto> getEmployeesSorted(String field, String direction) {
 
-	    List<Employee> employees =
-	            repo.findAll(Sort.by(field));
+	    Sort sort = direction.equalsIgnoreCase("desc")
+	            ? Sort.by(field).descending()
+	            : Sort.by(field).ascending();
+
+	    List<Employee> employees = repo.findAll(sort);
 
 	    return mapper.toDto(employees);
 	}

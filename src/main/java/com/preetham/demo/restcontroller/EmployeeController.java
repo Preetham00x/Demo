@@ -84,14 +84,15 @@ import com.preetham.demo.dto.EmployeeResponseDto;
 		    );
 		}
 		@GetMapping("/sort")
-		public ResponseEntity<List<EmployeeResponseDto>>
-		getSortedEmployees(
-		        @RequestParam String field){
+		public ResponseEntity<List<EmployeeResponseDto>> getSortedEmployees(
+		        @RequestParam String field,
+		        @RequestParam(defaultValue = "asc") String direction){
 
 		    return ResponseEntity.ok(
-		            service.getEmployeesSorted(field)
+		            service.getEmployeesSorted(field, direction)
 		    );
 		}
+		
 		@GetMapping("/search/salary")
 		public ResponseEntity<List<EmployeeResponseDto>> searchBySalary(@RequestParam Double salary){
 			List<EmployeeResponseDto> e=service.searchbySalaryGreaterthan(salary);

@@ -26,11 +26,12 @@ public interface IEmployeeService {
 	
 	void deleteEmpById(Integer id);
 	
+	
 	List<EmployeeResponseDto> searchByEmpName(String name);
 	
 	List<EmployeeResponseDto> searchbySalaryGreaterthan(Double salary);
 	
 	Page<EmployeeResponseDto> getEmployeesWithPagination(int page,int size);
 	
-	List<EmployeeResponseDto> getEmployeesSorted(String field);
+	List<EmployeeResponseDto> getEmployeesSorted(String field, String direction);
 }
