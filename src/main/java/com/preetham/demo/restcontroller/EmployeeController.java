@@ -73,6 +73,11 @@ import com.preetham.demo.dto.EmployeeResponseDto;
 			return new ResponseEntity<>(emp,HttpStatus.OK);
 			
 		}
+		@GetMapping("/search/salary")
+		public ResponseEntity<List<EmployeeResponseDto>> searchBySalary(@RequestParam Double salary){
+			List<EmployeeResponseDto> e=service.searchbySalaryGreaterthan(salary);
+			return new ResponseEntity<>(e,HttpStatus.OK);
+		}
 		
 		@PutMapping("/{id}")
 		public ResponseEntity<EmployeeResponseDto> updateEmpDetails(

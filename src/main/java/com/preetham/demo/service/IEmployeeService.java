@@ -22,4 +22,5 @@ public interface IEmployeeService {
 	List<EmployeeResponseDto> searchByDeptId(Integer deptId);
 	void deleteEmpById(Integer id);
 	List<EmployeeResponseDto> searchByEmpName(String name);
+	List<EmployeeResponseDto> searchbySalaryGreaterthan(Double salary);
 }

@@ -81,6 +81,11 @@ public class EmployeeService implements IEmployeeService  {
 	}
 
 	@Override
+	public List<EmployeeResponseDto> searchbySalaryGreaterthan(Double salary){
+		List<Employee> emp=repo.findBySalaryGreaterThan(salary);
+		return mapper.toDto(emp);
+	}
+	@Override
 	public void deleteEmpById(Integer id) {
 		if(!repo.existsById(id)) {
 		throw new RuntimeException("record not present");
